@@ -1,0 +1,8 @@
+Tareas fase 1
+LISTO 1. Montar un midware Node.js
+LISTO 2. Implementar el sitio talcual esta.
+LISTO 3. integrar el front con un back en Mongo, o Aerospike. (Aerospike no compatible con windows)
+4. Agregar boton checkout al Basket y desarrollar el out de la compra.
+5. Agregar loguin social Face y Google
+LISTO 6. Desarrollar front para dar de alta los articulos
+Hasta ahi estaria la fase 1.

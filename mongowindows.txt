@@ -1,0 +1,39 @@
+
+
+This is how I solved it:
+
+You can follow step by step here:
+
+MongoDB Steps:
+
+Download the latest 64-bit MSI version of windows. https://www.mongodb.org/downloads Run the installer (.msi file)
+
+Add it to your path of environment variables. Should be from: C:\Program Files\MongoDB\Server\3.0\bin
+
+Create a “\data\db” folder which is used by mongodb to store all data.
+
+Go Into C Drive and create a folder called ‘data’
+
+Go into this created folder and create a folder called ‘db’
+
+You should have this folder:
+
+C:\data\db
+
+Note: This is the default directory location expected by mongoDB, don’t create anywhere else.
+
+Finally, open command prompt and type:
+
+        mongod
+
+You should see it asking for permissions (allow it) and then listen to a port. After that is done, open another command prompt, leaving the previous one running the server.
+
+Type in the new command prompt
+
+        mongo
+
+You should see it display the version and connect to a test database.
+
+This proves successful install!=)
+
+Source: https://www.youtube.com/watch?v=K_5mj3-_uJQ

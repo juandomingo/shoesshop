@@ -5,10 +5,9 @@
     "express": "latest",
     "jade" : "latest",
     "body-parser" : "latest",
-    "mongoose":"latest",
     "socket.io":"latest",
-    "sqlite3":"latest",
-    "jetty":"latest"
+    "aerospike":"latest",
+    "mongodb":"latest"
   }
 }
 

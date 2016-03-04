@@ -2,215 +2,224 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>Solution for Long Drop Down Items</title>
-    <script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
-    <script src="/socket.io/socket.io.js"></script>
+	<meta charset="UTF-8">
+	<title>Add shoes</title>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	<style type="text/css">
+		.whole-form{
+			width: 25%;
+			border-radius: 25px;
+			border: 5px solid #7FDBFF;
+			padding: 5px 5px 10px 5px;
+			white-space:nowrap;
+			display:inline;
+			background:transparent;
+			float: left;
+			color:#FF4136;
+			text-align: center;
+			font: 300 0.8em/100% "Helvetica Neue", Arial, sans-serif;
+		}
 
-    <style type="text/css">
-        .whole-form{
-            width: 25%;
-            border-radius: 25px;
-            border: 5px solid #7FDBFF;
-            padding: 5px 5px 10px 5px;
-            white-space:nowrap;
-            display:inline;
-            background:transparent;
-            float: left;
-            color:#FF4136;
-            text-align: center;
-            font: 300 1.2em/100% "Helvetica Neue", Arial, sans-serif;
-        }
+		#message{
+			border-radius: 20px;
+			border: 5px solid #7FDBDD;
+			font: 100 0.7em/100% "Helvetica Neue", Arial, sans-serif;
+			color:#FF4136;
+			text-align: center;
+			width: 50%;
+			padding: 0.5em 3.5em 0.5em 1em;
+		}
 
-        p{
-            font: 100 0.7em/100% "Helvetica Neue", Arial, sans-serif;
-        }
+		.whole-form input{
+			  border: 3px solid #7FDBFF;
+			  border-radius: 10px;
+			  color: #111;
+			  width: 50%;
+			  line-height: 1.5em;
+			  padding: 0.5em 3.5em 0.5em 1em;
+		}
 
-        .whole-form input{
-              border: 3px solid #7FDBFF;
-              border-radius: 10px;
-
-              color: #111;
-              line-height: 1.5em;
-              padding: 0.5em 3.5em 0.5em 1em;
-        }
-
-        .whole-form button{
-              border: thick;
-              border-radius: 10px;
-              border: 3px solid #7FDBFF;
-              background-color: #FF4136;
-              text-align: center;
-              color: #fff;
-              line-height: 1.5em;
-              margin: 1em 0em 0em 0em;
-              padding: 0.5em 2em 0.5em 2em;
-        }
-
-        h1{
-            color:#FF851B ;
-        }
-    </style>
+		.whole-form button{
+			  border: thick;
+			  border-radius: 10px;
+			  border: 3px solid #7FDBFF;
+			  background-color: #FF4136;
+			  text-align: center;
+			  color: #fff;
+			  line-height: 1.5em;
+			  margin: 1em 0em 0em 0em;
+			  padding: 0.5em 2em 0.5em 2em;
+		}
+		table{
+			border-radius: 20px;
+			border: 5px solid #7FDBDD;
+			padding: 2px 2px 5px 2px;
+			white-space:nowrap;
+			display:inline;
+			background:transparent;
+			float: left;
+			color:#FF4136;
+			text-align: center;
+			font: 300 0.5em/100% "Helvetica Neue", Arial, sans-serif;
+		}
+		h1{
+			color:#FF851B ;
+		}
+	</style>
 </head>
 
 
 <body>
+   <p id="message"></p>
+	<div class="whole-form" id="login">
+	<h1>LOG IN</h1>
+
+	   <div class="login"> <p>USERNAME</p><input placeholder="Your username" id="username" autocomplete="true"  /></div>
+	   <div class="login"> <p>PASSWORD</p><input placeholder="Your password" id="password" autocomplete="true"   /></div>
+	   <button id="loginsubmit" class="login">Send</button>
+
+	</div>
+
+	<div id="addshoe">
+	<div class="whole-form">
+	<h1>Add Shoe</h1>
+	   <div class="addshoes"> <p>NAME</p><input placeholder="name" id="shoe_name" autocomplete="off" required="true" /></div>
+	   <div class="addshoes"> <p>PRICE</p><input placeholder="price" id="price" autocomplete="off"  required="true"/></div>
+	   <div class="addshoes"> <p>DESCRIPTION</p><input placeholder="description" id="description" autocomplete="off"  required="true"/></div>
+	   <div class="addshoes"> <p>COLOR</p><input placeholder="color number" id="color_number" autocomplete="off"  value="2" required="true"/></div>
+	   <div class="addshoes"> <p>IMAGE</p><input placeholder="image" id="image" autocomplete="off"  value="images/shoe/item1.jpeg" required="true"/></div>
+
+	   <button id="addshoesubmit">Send</button>
+	</div>
 
 
-    
-    <div class="whole-form">
-    <h1>LOG IN</h1>
-       <div class="login"> <p>USERNAME</p><input placeholder="Your username" id="username" autocomplete="off"  /></div>
-       <div class="login"> <p>PASSWORD</p><input placeholder="Your password" id="password" autocomplete="off"  /></div>
-       <button class="login">Send</button>
-    </div>
+	</nav>
+		<div id="tablediv">
+		<table id="messages" class="queryB">
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Price</th>
+				<th>Description</th>
+				<th>Color</th>
+				<th>Image</th>
+			</tr>
+		</table> 
+		</div>
+	</div>
 
-    </form>
-</nav>
-<div id="tablediv">
-    <table id="messages" class="queryB">
-        <tr>
-            <th>Postcode</th>
-            <th>Price</th>
-            <th>No. Bedrooms</th>
-            <th>Type Property</th>
-            <th>Date Listing</th>
-            <th>State Agent</th>
-            <th>Agent Postcode</th>
-        </tr>
-    </table> 
-</div>
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
-        <script src="js/index.js"></script>
 <script>
 
 //FIRST CONFIGURATION
-    var socket = io.connect('http://localhost:3000');
-    var selected = "";
-    var toShow = [];
-    var queryBResult = [];
-    $('.queryB').hide();
-    $('.queryA').hide();
-    $('.queryCommon').hide();
+	var socket = io.connect('http://localhost:3000'),
+		toShow = [],
+		queryResult = [],
+		message = ""
+		_token = false;
 
+	$('#addshoe').hide();
 
-    
+	
 //UTILS
-    var resetData = function(){
-        toShow = [];
-        queryBResult = [];
-    }
+	var resetData = function(){
+		toShow = [];
+		queryResult = [];
+	}
 
-    var resetAndShow = function(){
-        toShow = [];
-        $(".messages").remove();
-        for (var i = queryBResult.length - 1; i >= 0; i--) {
-            if (isShowable(queryBResult[i])){
-                toShow.push(queryBResult[i]);
-            } 
-        }
+	var resetAndShow = function(){
+		toShow = [];
+		$(".messages").remove();
+		for (var i = queryResult.length - 1; i >= 0; i--) {
+			if (isShowable(queryResult[i])){
+				toShow.push(queryResult[i]);
+			} 
+		}
 
-        for (var i = toShow.length - 1; i >= 0; i--) {
-            showData(toShow[i]);
-        }
-    }
+		for (var i = toShow.length - 1; i >= 0; i--) {
+			showData(toShow[i]);
+		}
+	}
 
 
-    var showData = function(property){
-        $('#messages').append("<tr class='messages'>"+
-        "<td>"+property.postcode.name +"</td>"+
-        "<td>£"+property.price +"</td>"+
-        "<td>"+property.nobedrooms +"</td>"+
-        "<td>"+property.type.type +"</td>"+
-        "<td>"+property.datelisting +"</td>"+
-        "<td>"+property.stateagent.name +"</td>"+
-        "<td>"+property.stateagent.postcode.name +"</td>"+
-        "</tr>");
-    }
+	var showData = function(shoe){
+		$('#messages').append("<tr class='messages'>"+
+		"<td>"+shoe._id +"</td>"+
+		"<td>"+shoe.shoe_name +"</td>"+
+		"<td>$"+shoe.price +"</td>"+
+		"<td>"+shoe.description +"</td>"+
+		"<td>"+shoe.color_number +"</td>"+
+		"<td>"+shoe.image +"</td>"+
+		"</tr>");
+	}
 
 //CHANGE SOMETHING HANDLERS
-    $( "#selectRooms" ).change(function() {
-        resetAndShow();
-    });
-
-    $( "#selectType" ).change(function() {
-        resetAndShow();
-    });
-
-    $( "#valueMin" ).change(function() {
-        resetAndShow();
-    });
-
-    $( "#valueMax" ).change(function() {
-        resetAndShow();
-    });
+/*    $( "#selectRooms" ).change(function() {
+		resetAndShow();
+	});*/
 
 
 //ENVENT SOCKET INT HANDLERS
-    var isShowable = function(property){
-        if (property.price >  $('#valueMin').val() && property.price < $('#valueMax').val())
-            if (property.type.id == $('#typeID').val())
-                if (property.nobedrooms == $('#selectRooms').val())
-                return true;
-        return false;
-    }
+	var isShowable = function(property){
+		return true;
+	}
 
-    var handleQueryBResult = function(data){
-        queryBResult.push(data);
-        resetAndShow();
-    }
-    socket.on('queryBResult', handleQueryBResult);
+	var loginRhandle = function(data){
+		_token = data.result;
+		$("#message").text(data.message + data.result);
+		if (data.result !== false)
+			{	
+				$('#login').hide();
+				$('#addshoe').show();
+				resetData();
+				getshoes();
+			}
 
-    var handleTypes = function(data){
-        $('#selectType').append("<option class='removible' value="+data.id+">"+ data.type+" </option>");
-    }
-    socket.on('getTypes', handleTypes);
+		
+	};
+	socket.on('loginR', loginRhandle);
 
-    var handleQueries = function(data){
-        $('#selectQuery').append("<option class='removible' value="+data.id+">Query Name "+ data.name+ " (postcode: "+ data.postcode+")radius: "+ data.radius +")(days: "+data.days +") </option>");
-    }
-    socket.on('getQueries', handleQueries);
+	var addshoeRHandle = function(data){
+		$("#message").text(data.message);
+		queryResult.push(data.result);
+		resetAndShow();
+		if (data.result !== false){resetData();getshoes();}
+	};
+	socket.on('addshoeR', addshoeRHandle);
+
+	var getshoesRHandle = function(data){
+		$("#message").text(data.message);
+		queryResult.push(data.result);
+		resetAndShow();
+	};
+	socket.on('getshoesR', getshoesRHandle);
 
 //CLICK HANDLERS
-    $('form').submit(function(){
-        resetAndShow();
-        resetData();
-        if(selected === "queryB"){
-            socket.emit(selected, {queryID : $('#queryID').val()});
-        }
-        else{
-            socket.emit(selected, {postcode : $('#postcode').val(), radius : $('#radius').val(),
-                                days : $('#days').val(), queryname : $('#queryname').val()});
-        }
-        return false;
-    });
 
-    $('#QA').click(function(){
-        selected = "queryA";
-        $('#queryType').text("Set a POSTCODE, RADIUS, max DAYS since the publication and a NAME for this query. Then click Send");
-        $('.queryB').hide();
-        $('.queryA').show();
-        $('.queryCommon').show();
-    });
-    
-    $('#QB').click(function(){
-        resetData();
-        $(".removible").remove();
-        $(".messages").remove();
-        $('#queryType').text("Set a QUERY TO USE to filter");
-        selected = "queryB";
-        socket.emit("getTypesC","getTypes");
-        socket.emit("getQueriesC","getQueries");
-        $('.queryA').hide();
-        $('.queryB').show();
-        $('.queryCommon').show();
-    });
+	$('#addshoesubmit').click(function(){
+		socket.emit("addshoe", 
+			{ shoes : {
+					shoe_name : $('#shoe_name').val(),
+					description : $('#description').val(),
+					color_number : $('#color_number').val(),
+					image : $('#image').val(),
+					price : $('#price').val()},
+			token : _token
+			});
+	});
 
+	$('#loginsubmit').click(function(){
+		socket.emit("login", { username : $('#username').val(), password : $('#password').val()});
+	});
+
+	var getshoes = function(){
+		socket.emit("getshoes", {});
+	}
 
 </script>
-    
-    
-    
+	
+	
+	
   </body>
 </html>
