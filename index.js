@@ -69,7 +69,7 @@ app.get('/add', function(req, res) {
 });
 
 
-app.post('/checkout', function(req, res){console.log(res+asd);})
+app.post('/checkout', function(req, res){console.log(req.body);})
 
 
 server.listen(3000, function(){
