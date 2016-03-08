@@ -1,13 +1,29 @@
 {
-  "name": "hello"
-, "version": "0.0.1"
-, "dependencies": {
+  "name": "hello",
+  "version": "1.0.1",
+  "dependencies": {
+    "body-parser": "latest",
     "express": "latest",
-    "jade" : "latest",
-    "body-parser" : "latest",
-    "socket.io":"latest",
-    "aerospike":"latest",
-    "mongodb":"latest"
+    "google-auth-library": "^0.9.7",
+    "googleapis": "^2.1.7",
+
+    "mongodb": "latest",
+    "socket.io": "latest",
+    "mongoose" : "~3.8.1",          
+    "passport" : "~0.1.17",         
+    "passport-local" : "~0.1.6",    
+    "passport-facebook" : "latest", 
+    "passport-twitter" : "~1.0.2",  
+    "passport-google-oauth" : "~0.1.5",
+    "connect-flash" : "~0.1.1",     
+    "bcrypt-nodejs" : "latest",
+    "morgan" :"latest",
+    "morgan": "~1.0.0",
+    "body-parser": "~1.0.0",
+    "cookie-parser": "~1.0.0",
+    "method-override": "~1.0.0",
+    "express-session": "~1.0.0",
+    "ejs" : "latest",
+    "mongoose" : "latest"
   }
 }
-
