@@ -1,3 +1,42 @@
-<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Super fantastic shop :: react + reflux demo</title>
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="description" content="A super fantastic demo shop making use of the incredible powers provided by react, react-router and reflux.">
+  <meta name="keywords" content="react,reflux,demo,shopping,basket,ecommerce">
+  <script src="vendor/custom/modernizr-custom.js"></script>
+  <link rel="stylesheet" href="vendor/bower/pure/pure-min.css">
+  <link rel="stylesheet" href="vendor/bower/pure/grids-responsive-min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+  <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+  <script type="text/javascript">
+    loginstring = <% if (user !== undefined ) { %>
+        <% if (user.facebook.name !== undefined) { %>
+          "<%=user.facebook.name %>"
+        <% } else {%>
+          <% if (user.google.name !== undefined) { %>
+           "<%= user.google.name  %>"
+          <% } else { %> "Login or Register with: " <% } %>
+        <% }  %>
+       <% } else { %> "Login or Register with: " <% } %>;
+  </script>
+</head>
+<body>
 
-<% include ../app/index.html %>
+
+
+
+  <div id="app"></div>
+
+  <script src="build/build.min.js"></script>
+
+
+</body>
+</html>
+
+
+

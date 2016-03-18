@@ -6,6 +6,8 @@
 	<title>Add shoes</title>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	<script src="/siofu/client.js"></script>
+
 	<style type="text/css">
 		.whole-form{
 			width: 25%;
@@ -83,15 +85,18 @@
 
 	<div id="addshoe">
 	<div class="whole-form">
-	<h1>Add Shoe</h1>
+	<h1 id="action">Add Shoe</h1>
+		<div class="editshoe"> <input hidden="true" id="id" value=""/></div>
 	   <div class="addshoes"> <p>NAME</p><input placeholder="name" id="shoe_name" autocomplete="off" required="true" /></div>
 	   <div class="addshoes"> <p>PRICE</p><input placeholder="price" id="price" autocomplete="off"  required="true"/></div>
 	   <div class="addshoes"> <p>DESCRIPTION</p><input placeholder="description" id="description" autocomplete="off"  required="true"/></div>
-	   <div class="addshoes"> <p>COLOR</p><input placeholder="color number" id="color_number" autocomplete="off"  value="2" required="true"/></div>
-	   <div class="addshoes"> <p>IMAGE</p><input placeholder="image" id="image" autocomplete="off"  value="images/shoe/item1.jpeg" required="true"/></div>
-
-	   <button id="addshoesubmit">Send</button>
+	   <div class="addshoes"> <p>COLOR</p><input placeholder="color number" id="color_number" autocomplete="off"  value="2" required="true"/></div>	
+  		<div class="addshoes"> <p>IMAGE</p> <input type="file" id="siofu_input"/> </div>
+  		<button id="addeditshoesubmit">Send</button>
+  		<div class="editshoe"> <button id="cancel">Cancel</button></div>
 	</div>
+
+
 
 
 	</nav>
@@ -104,6 +109,8 @@
 				<th>Description</th>
 				<th>Color</th>
 				<th>Image</th>
+				<th>Edit</th>
+				<th>Delete</th>
 			</tr>
 		</table> 
 		</div>
@@ -120,9 +127,23 @@
 		_token = false;
 
 	$('#addshoe').hide();
-
+	$(".editshoe").hide(); 
 	
 //UTILS
+
+	var cleanForm = function(){
+		$("#action").text("Add item");
+		$(".editshoe").hide();
+		$('#id').val("");
+		$('#shoe_name').val("");
+		$('#description').val("");
+		$('#color_number').val("");
+		$('#price').val("");
+		var control = $("#siofu_input");
+		control.replaceWith( control.val(undefined).clone(true) );
+		setUploader();
+	}
+
 	var resetData = function(){
 		toShow = [];
 		queryResult = [];
@@ -146,11 +167,13 @@
 	var showData = function(shoe){
 		$('#messages').append("<tr class='messages'>"+
 		"<td>"+shoe._id +"</td>"+
-		"<td>"+shoe.shoe_name +"</td>"+
+		"<td>"+shoe.name +"</td>"+
 		"<td>$"+shoe.price +"</td>"+
 		"<td>"+shoe.description +"</td>"+
-		"<td>"+shoe.color_number +"</td>"+
+		"<td>"+shoe.colorId +"</td>"+
 		"<td>"+shoe.image +"</td>"+
+		"<td><button class='edit' value='"+JSON.stringify(shoe)+"'> edit </button></td>"+
+		"<td><button class='delete' value='"+shoe._id +"' > delete </button></td>"+
 		"</tr>");
 	}
 
@@ -196,26 +219,78 @@
 	socket.on('getshoesR', getshoesRHandle);
 
 //CLICK HANDLERS
-
-	$('#addshoesubmit').click(function(){
-		socket.emit("addshoe", 
-			{ shoes : {
-					shoe_name : $('#shoe_name').val(),
+	var uploader = new SocketIOFileUpload(socket);
+	var setUploader = function(){
+	uploader.listenOnSubmit(document.getElementById("addeditshoesubmit"),document.getElementById("siofu_input"));};
+	setUploader();
+	uploader.addEventListener("start",function(event){
+		event.file.meta.product = { shoes : {
+					_id : $('#id').val(), 
+					name : $('#shoe_name').val(),
 					description : $('#description').val(),
-					color_number : $('#color_number').val(),
-					image : $('#image').val(),
+					colorId : $('#color_number').val(),
+					image : $('#siofu_input').val(),
 					price : $('#price').val()},
 			token : _token
-			});
+			};
+		event.file.meta.hash = $('#hash').val();
+		event.file.meta.description = $('#description').val();
+		cleanForm();
+	})
+
+	$('#addeditshoesubmit').click(function(){
+		if($('#id').val() !== "" && $('#siofu_input').val() == ""){
+			socket.emit("editshoe", { shoes : {
+				 _id : $('#id').val(),
+				 name : $('#shoe_name').val(),
+				 description : $('#description').val(),
+				 colorId : $('#color_number').val(),
+				 image : $('#siofu_input').val(),
+				 price : $('#price').val()
+				},
+			token : _token
+			}
+		);
+			cleanForm();
+			resetAndShow();
+		};
+		
 	});
+
+	$("#tablediv").on("click",".delete", function(){
+		
+		var a = this.value;
+		socket.emit("delete", { _id : a, token : _token });
+		resetData();
+		resetAndShow();
+	});
+
+
 
 	$('#loginsubmit').click(function(){
 		socket.emit("login", { username : $('#username').val(), password : $('#password').val()});
 	});
 
+	$("#tablediv").on("click",".edit", function(){
+		var a = eval("[" + this.value+"]")[0];
+		$("#action").text("Edit item");
+		$(".editshoe").show();
+		$('#id').val(a._id);
+		$('#shoe_name').val(a.name);
+		$('#description').val(a.description);
+		$('#color_number').val(a.colorId);
+		$('#price').val(a.price);
+	});
+
+	$("#cancel").click(function(){
+		cleanForm();
+	});
+
+
+
 	var getshoes = function(){
 		socket.emit("getshoes", {});
-	}
+	};
 
 </script>
 	

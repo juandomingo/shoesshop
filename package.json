@@ -1,5 +1,5 @@
 {
-  "name": "hello",
+  "name": "Shopshoes",
   "version": "1.0.1",
   "dependencies": {
     "body-parser": "latest",
@@ -24,6 +24,7 @@
     "method-override": "~1.0.0",
     "express-session": "~1.0.0",
     "ejs" : "latest",
-    "mongoose" : "latest"
+    "mongoose" : "latest",
+    "socketio-file-upload" :"latest"
   }
 }

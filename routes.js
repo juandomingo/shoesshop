@@ -1,9 +1,32 @@
 module.exports = function(app, passport) {
 // normal routes ===============================================================
+    var controller = require('./controller/controller.js');
+    var User = require('./model/user.js');
 
     // show the home page (will also have our login links)
     app.get('/', function(req, res) {
-        res.render('index.ejs');
+        console.log(req.user);
+        res.render('index.ejs', {
+            user : req.user
+        });
+    });
+
+    app.get('/getfood', function(req, res) {
+        console.log("food");
+        controller.getProducts("food",function(json){
+            res.setHeader('Content-Type', 'application/json');
+            console.log(json);
+            res.send(JSON.stringify(json));
+        });
+    });
+
+    app.get('/getfashion', function(req, res) {
+        console.log("fashion");
+        controller.getProducts("fashion",function(json){
+            res.setHeader('Content-Type', 'application/json');
+            console.log(json);
+            res.send(JSON.stringify(json));
+        });
     });
 
     app.get('/add', function(req, res) {
@@ -23,7 +46,7 @@ module.exports = function(app, passport) {
     // PROFILE SECTION =========================
     app.get('/profile', isLoggedIn, function(req, res) {
         res.render('profile.ejs', {
-            user : req.user
+             user : req.user
         });
     });
 
@@ -72,7 +95,7 @@ module.exports = function(app, passport) {
         // handle the callback after facebook has authenticated the user
         app.get('/auth/facebook/callback',
             passport.authenticate('facebook', {
-                successRedirect : '/profile',
+                successRedirect : '/',
                 failureRedirect : '/'
             }));
 
@@ -84,7 +107,7 @@ module.exports = function(app, passport) {
         // the callback after google has authenticated the user
         app.get('/auth/google/callback',
             passport.authenticate('google', {
-                successRedirect : '/profile',
+                successRedirect : '/',
                 failureRedirect : '/'
             }));
 
