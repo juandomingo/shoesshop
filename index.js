@@ -140,6 +140,6 @@ io.sockets.on('connection', handleClient);
 
 
 
-server.listen(3000, function(){
-  console.log("Listen on port 3000\n");
+server.listen(80, function(){
+  console.log("Listen on port 80\n");
 });

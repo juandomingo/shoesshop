@@ -7,13 +7,24 @@
   <meta name="description" content="A super fantastic demo shop making use of the incredible powers provided by react, react-router and reflux.">
   <meta name="keywords" content="react,reflux,demo,shopping,basket,ecommerce">
   <script src="vendor/custom/modernizr-custom.js"></script>
+   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="vendor/bower/pure/pure-min.css">
+  <link rel="stylesheet" href="vendor/bower/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="vendor/bower/bootstrap-social/bootstrap-social.css">
+
   <link rel="stylesheet" href="vendor/bower/pure/grids-responsive-min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
   <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+
   <script type="text/javascript">
+    if (window.location.hash && window.location.hash == '#_=_') {
+        window.location.hash = '';
+    }
+</script>
+  <script type="text/javascript">
+  window.location.hash = '';
     loginstring = <% if (user !== undefined ) { %>
         <% if (user.facebook.name !== undefined) { %>
           "<%=user.facebook.name %>"
@@ -27,9 +38,6 @@
 </head>
 <body>
 
-
-
-
   <div id="app"></div>
 
   <script src="build/build.min.js"></script>
@@ -37,6 +45,3 @@
 
 </body>
 </html>
-
-
-
