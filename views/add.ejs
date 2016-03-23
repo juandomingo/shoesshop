@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Add shoes</title>
+	<title>Add product</title>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 	<script src="/siofu/client.js"></script>
@@ -76,7 +76,7 @@
 		    width: 100%;
 		    height: 100%;
 		    display: block;
-		    content: 'SELECT A PICTURE';
+		    content: 'upload';
 		    line-height: 60px;
 		    border-radius: 5px;
 		}
@@ -218,60 +218,77 @@
     </div>
 
 
-    <div id="addshoe" class="splash2">
+    <div id="addProduct" class="splash2">
     	<div class="pure-g">
 
 
 
 			<div id="" class="pure-u-1-6">
-				<h1 id="action" class="splash-head">Add Shoe</h1>
+				<h1 id="action" class="splash-head">Add product</h1>
 				<div class="pure-form pure-form-aligned" id="">
 				<fieldset>
-					<div class="editshoe"> <input hidden="true" id="id" value=""/></div>
+					<div class="editproduct"> <input hidden="true" id="id" value=""/></div>
 
-				   	<div class="pure-control-group addshoes">
-	            		<label for="password" class="splash-subhead">NAME</label>
-	            		<input  placeholder="name" id="shoe_name" autocomplete="off" required="true">
+					<div class="pure-control-group addProducts">
+	            		 <label for="type">TYPE</label>
+					        <select id="type">
+					            <option value="fashion">FASHION</option>
+					            <option value="food">FOOD</option>
+					        </select>
+	        		</div>
+
+				   	<div class="pure-control-group addProducts">
+	            		<label for="name" class="splash-subhead">NAME</label>
+	            		<input  placeholder="name" id="product_name" autocomplete="off" required="true">
 	        		</div>
 
 				   	
-				   	<div class="pure-control-group addshoes">
-	            		<label for="password" class="splash-subhead">PRICE</label>
+				   	<div class="pure-control-group addProducts">
+	            		<label for="price" class="splash-subhead">PRICE</label>
 	            		<input  placeholder="price" id="price" autocomplete="off"  required="true"/>
 	        		</div>
 
 				   	
-				   	<div class="pure-control-group addshoes">
-	            		<label for="password" class="splash-subhead">DESCRIPTION</label>
+				   	<div class="pure-control-group addProducts">
+	            		<label for="description" class="splash-subhead">DESCRIPTION</label>
 	            		<input  placeholder="description" id="description" autocomplete="off"  requi>
 	        		</div>
 
 				   	
-				   	<div class="pure-control-group addshoes">
-	            		<label for="password" class="splash-subhead">COLOR</label>
+				   	<div class="pure-control-group addProducts">
+	            		<label for="color_number" class="splash-subhead">COLOR</label>
 	            		<input  placeholder="color number" id="color_number" autocomplete="off"  val>
 	        		</div>
 
 				   	
-			  		<div class="pure-control-group addshoes">
-	            		<label for="password" class="splash-subhead" class="splash-subhead">IMAGE</label>
+			  		<div class="pure-control-group addProducts">
+	            		<label for="siofu_input" class="splash-subhead" class="splash-subhead">IMAGE</label>
 	            		<input type="file"  id="siofu_input" class="btnfile"/>  
 	        		</div>
 
 			  		 
-			  		<a id="addeditshoesubmit" class="login pure-button button-success" >Send</a>
-			  		<div class="editshoe"> <a type="submit" id="cancel" class="button-warning pure-button">Cancel</a></div>
+			  		<a id="addeditproductsubmit" class="login pure-button button-success" >Send</a>
+			  		<div class="editproduct"> <a type="submit" id="cancel" class="button-warning pure-button">Cancel</a></div>
 			   	</fieldset>
 			   	</div>
 			</div>
 
 
 			<div class="pure-u-2-3 " id="tablediv">
-			<h1 id="action" class="splash-head">ADD PRODUCTS</h1>
+			<h1 id="action" class="splash-head">PRODUCTS</h1>
+			<div class="pure-control-group addProducts">
+				<label for="type_to_show">TYPE</label>
+				<select id="type_to_show">
+					<option value="all">ALL</option>
+					<option value="fashion">FASHION</option>
+					<option value="food">FOOD</option>
+				</select>
+				<div class="pure-control-group addProducts">
 				<table id="messages" class="rwd-table">
 				<thead>
 					<tr>
 						<th>ID</th>
+						<th>TYPE</th>
 						<th>Name</th>
 						<th>Price</th>
 						<th>Description</th>
@@ -300,17 +317,19 @@
 		queryResult = [],
 		message = ""
 		_token = false;
+		_type_selected = "fashion";
 
-	$('#addshoe').hide();
-	$(".editshoe").hide(); 
+	$('#addProduct').hide();
+	$(".editproduct").hide(); 
 	
 //UTILS
 
 	var cleanForm = function(){
 		$("#action").text("Add item");
-		$(".editshoe").hide();
+		$(".editproduct").hide();
 		$('#id').val("");
-		$('#shoe_name').val("");
+		$('#type').val("");
+		$('#product_name').val("");
 		$('#description').val("");
 		$('#color_number').val("");
 		$('#price').val("");
@@ -327,6 +346,7 @@
 	var resetAndShow = function(){
 		toShow = [];
 		$(".messages").remove();
+		console.log(queryResult);
 		for (var i = queryResult.length - 1; i >= 0; i--) {
 			if (isShowable(queryResult[i])){
 				toShow.push(queryResult[i]);
@@ -339,16 +359,18 @@
 	}
 
 
-	var showData = function(shoe){
+	var showData = function(product){
+		console.log(product);
 		$('#messages').append("<tr class='messages'>"+
-		"<td data-th='id'>"+shoe._id +"</td>"+
-		"<td data-th='name'>" +shoe.name +"</td>"+
-		"<td data-th='price'>$"+ shoe.price +"</td>"+
-		"<td data-th='description'>" +shoe.description +"</td>"+
-		"<td data-th='colorId'>" + shoe.colorId +"</td>"+
-		"<td data-th='image'>"+shoe.image +"</td>"+
-		"<td><button class='edit button-xsmall pure-button button-warning' value='"+JSON.stringify(shoe)+"'> edit </button ></td>"+
-		"<td><button class='delete button-xsmall pure-button button-error' value='"+shoe._id +"' > delete </button ></td>"+
+		"<td data-th='id'>"+product._id +"</td>"+
+		"<td data-th='id'>"+product.type +"</td>"+
+		"<td data-th='name'>" +product.name +"</td>"+
+		"<td data-th='price'>$"+ product.price +"</td>"+
+		"<td data-th='description'>" +product.description +"</td>"+
+		"<td data-th='colorId'>" + product.colorId +"</td>"+
+		"<td data-th='image'>"+product.image +"</td>"+
+		"<td><button class='edit button-xsmall pure-button button-warning' value='"+JSON.stringify(product)+"'> edit </button ></td>"+
+		"<td><button class='delete button-xsmall pure-button button-error' value='"+product._id +"' > delete </button ></td>"+
 		"</tr>");
 	}
 
@@ -359,8 +381,12 @@
 
 
 //ENVENT SOCKET INT HANDLERS
-	var isShowable = function(property){
-		return true;
+	var isShowable = function(product){
+		var type_to_show = $('#type_to_show').val();
+		if (type_to_show === "all")  return true;
+		else
+			if (product.type === type_to_show){return true;}
+			else return false;
 	}
 
 	var loginRhandle = function(data){
@@ -369,59 +395,78 @@
 		if (data.result !== false)
 			{	
 				$('#login').hide();
-				$('#addshoe').show();
+				$('#addProduct').show();
 				resetData();
-				getshoes();
+				getBulkProducts();
 			}
-
-		
 	};
 	socket.on('loginR', loginRhandle);
 
-	var addshoeRHandle = function(data){
+	var addProductRHandle = function(data){
 		$("#message").text(data.message);
-		queryResult.push(data.result);
-		resetAndShow();
-		if (data.result !== false){resetData();getshoes();}
+		if (data.result === true){resetData();getBulkProducts();}
 	};
-	socket.on('addshoeR', addshoeRHandle);
+	socket.on('addProductR', addProductRHandle);
 
-	var getshoesRHandle = function(data){
+	var getAllProductsRHandle = function(data){
 		$("#message").text(data.message);
 		queryResult.push(data.result);
 		resetAndShow();
 	};
-	socket.on('getshoesR', getshoesRHandle);
+
+	var getBulkProductsRHandle = function(data){
+		resetData();
+		console.log(data);
+		$("#message").text(data[0].message);
+		for (var i = data[0].products.length - 1; i >= 0; i--) {
+			queryResult.push(data[0].products[i]);
+		}
+		resetAndShow();
+	};
+
+	var editProductRHandle = function(data){
+		console.log("editProductRHandle");
+		getBulkProducts();}
+
+	var deleterRHandle = function(data){
+		console.log("editProductRHandle");
+		getBulkProducts();}
+
+	socket.on('getAllProductsR', getAllProductsRHandle);
+	socket.on('getBulkProductsR',getBulkProductsRHandle);
+	socket.on('editProductR',editProductRHandle);
+	socket.on("deleterR"	,deleterRHandle);
+
 
 //CLICK HANDLERS
 	var uploader = new SocketIOFileUpload(socket);
 	var setUploader = function(){
-	uploader.listenOnSubmit(document.getElementById("addeditshoesubmit"),document.getElementById("siofu_input"));};
+	uploader.listenOnSubmit(document.getElementById("addeditproductsubmit"),document.getElementById("siofu_input"));};
 
 	setUploader();
 	uploader.addEventListener("start",function(event){
-		event.file.meta.product = { shoes : {
+		event.file.meta.product = { product : {
 					_id : $('#id').val(), 
-					name : $('#shoe_name').val(),
+					type : $('#type').val(),
+					name : $('#product_name').val(),
 					description : $('#description').val(),
 					colorId : $('#color_number').val(),
-					image : $('#siofu_input').val(),
+					image : $('#siofu_input').val().split('\\').pop(),
 					price : $('#price').val()},
 			token : _token
 			};
-		event.file.meta.hash = $('#hash').val();
-		event.file.meta.description = $('#description').val();
 		cleanForm();
-	})
+	});
 
-	$('#addeditshoesubmit').click(function(){
+	$('#addeditproductsubmit').click(function(){
 		if($('#id').val() !== "" && $('#siofu_input').val() == ""){
-			socket.emit("editshoe", { shoes : {
+			socket.emit("editProduct", { product : {
 				 _id : $('#id').val(),
-				 name : $('#shoe_name').val(),
+				 type : $('#type').val(),
+				 name : $('#product_name').val(),
 				 description : $('#description').val(),
 				 colorId : $('#color_number').val(),
-				 image : $('#siofu_input').val(),
+				 image : "",
 				 price : $('#price').val()
 				},
 			token : _token
@@ -448,10 +493,11 @@
 
 	$("#tablediv").on("click",".edit", function(){
 		var a = eval("[" + this.value+"]")[0];
+		$("#type").val(a.type);
 		$("#action").text("Edit item");
-		$(".editshoe").show();
+		$(".editproduct").show();
 		$('#id').val(a._id);
-		$('#shoe_name').val(a.name);
+		$('#product_name').val(a.name);
 		$('#description').val(a.description);
 		$('#color_number').val(a.colorId);
 		$('#price').val(a.price);
@@ -461,15 +507,26 @@
 		cleanForm();
 	});
 
-
-
-	var getshoes = function(){
-		socket.emit("getshoes", {});
+	var getBulkProductsTyped = function(type){
+		socket.emit("getBulkProductsTyped", { type : "product"});
 	};
 
+	var getBulkProducts = function(){
+		socket.emit("getBulkProducts");
+	};
+
+// CHANGE HANDLERS
+	$("#type_to_show").change(function(){
+		resetAndShow();
+
+
+	});
+
+
 </script>
-	
-	
+		
 	
   </body>
 </html>
+
+

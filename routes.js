@@ -13,7 +13,7 @@ module.exports = function(app, passport) {
 
     app.get('/getfood', function(req, res) {
         console.log("food");
-        controller.getProducts("food",function(json){
+        controller.getBulkProductsTyped("food",function(json){
             res.setHeader('Content-Type', 'application/json');
             console.log(json);
             res.send(JSON.stringify(json));
@@ -22,7 +22,7 @@ module.exports = function(app, passport) {
 
     app.get('/getfashion', function(req, res) {
         console.log("fashion");
-        controller.getProducts("fashion",function(json){
+        controller.getBulkProductsTyped("fashion",function(json){
             res.setHeader('Content-Type', 'application/json');
             console.log(json);
             res.send(JSON.stringify(json));
@@ -35,7 +35,6 @@ module.exports = function(app, passport) {
 
     app.post('/checkout', function(req, res) {
         console.log(req.body);
-
         res.render('login.ejs');
     });
 

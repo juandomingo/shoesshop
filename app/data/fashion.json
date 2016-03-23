@@ -1,7 +1,7 @@
 [{
   "products": [
     {
-      "id": 1,
+      "_id": 1,
       "colorId": 9,
       "name": "Fashion item #1",
       "image": "images/fashion/item2.jpeg",
@@ -9,15 +9,15 @@
       "price": 2
     },
     {
-      "id": 2,
+      "_id": 2,
       "colorId": 5,
       "name": "Fashion item #2",
       "image": "images/fashion/item8.jpeg",
-      "description": "fuga animi ut\ntenetur id et blanditiis nesciunt dolore ut vero\nperferendis quibusdam vel\naut vero aliquam ullam architecto magnam asperiores enim\nvoluptate sint reprehenderit\nblanditiis excepturi cumque qui",
+      "description": "fuga animi ut\ntenetur _id et blanditiis nesciunt dolore ut vero\nperferendis quibusdam vel\naut vero aliquam ullam architecto magnam asperiores enim\nvoluptate sint reprehenderit\nblanditiis excepturi cumque qui",
       "price": 151
     },
     {
-      "id": 3,
+      "_id": 3,
       "colorId": 5,
       "name": "Fashion item #3",
       "image": "images/fashion/item6.jpeg",
@@ -25,7 +25,7 @@
       "price": 137
     },
     {
-      "id": 4,
+      "_id": 4,
       "colorId": 4,
       "name": "Fashion item #4",
       "image": "images/fashion/item4.jpeg",
@@ -33,7 +33,7 @@
       "price": 28
     },
     {
-      "id": 5,
+      "_id": 5,
       "colorId": 9,
       "name": "Fashion item #5",
       "image": "images/fashion/item9.jpeg",
@@ -41,15 +41,15 @@
       "price": 66
     },
     {
-      "id": 6,
+      "_id": 6,
       "colorId": 2,
       "name": "Fashion item #6",
       "image": "images/fashion/item1.jpeg",
-      "description": "suscipit aut doloremque quas\nminima libero animi voluptatem in sint voluptatibus\nin saepe blanditiis nihil dolores fugit officia\nasperiores enim iure autem sint quas quos id temporibus",
+      "description": "suscipit aut doloremque quas\nminima libero animi voluptatem in sint voluptatibus\nin saepe blanditiis nihil dolores fugit officia\nasperiores enim iure autem sint quas quos _id temporibus",
       "price": 91
     },
     {
-      "id": 7,
+      "_id": 7,
       "colorId": 1,
       "name": "Fashion item #7",
       "image": "images/fashion/item4.jpeg",
@@ -57,7 +57,7 @@
       "price": 71
     },
     {
-      "id": 8,
+      "_id": 8,
       "colorId": 10,
       "name": "Fashion item #8",
       "image": "images/fashion/item9.jpeg",
@@ -65,7 +65,7 @@
       "price": 112
     },
     {
-      "id": 9,
+      "_id": 9,
       "colorId": 8,
       "name": "Fashion item #9",
       "image": "images/fashion/item9.jpeg",
@@ -73,7 +73,7 @@
       "price": 96
     },
     {
-      "id": 10,
+      "_id": 10,
       "colorId": 9,
       "name": "Fashion item #10",
       "image": "images/fashion/item8.jpeg",
@@ -81,7 +81,7 @@
       "price": 163
     },
     {
-      "id": 11,
+      "_id": 11,
       "colorId": 3,
       "name": "Fashion item #11",
       "image": "images/fashion/item0.jpeg",
@@ -89,15 +89,15 @@
       "price": 96
     },
     {
-      "id": 12,
+      "_id": 12,
       "colorId": 1,
       "name": "Fashion item #12",
       "image": "images/fashion/item2.jpeg",
-      "description": "id ratione magni\nsit totam mollitia ea cum\nautem et sit\nenim rerum pariatur est nesciunt quod",
+      "description": "_id ratione magni\nsit totam mollitia ea cum\nautem et sit\nenim rerum pariatur est nesciunt quod",
       "price": 111
     },
     {
-      "id": 13,
+      "_id": 13,
       "colorId": 9,
       "name": "Fashion item #13",
       "image": "images/fashion/item9.jpeg",
@@ -105,7 +105,7 @@
       "price": 23
     },
     {
-      "id": 14,
+      "_id": 14,
       "colorId": 8,
       "name": "Fashion item #14",
       "image": "images/fashion/item7.jpeg",

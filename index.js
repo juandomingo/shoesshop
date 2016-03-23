@@ -60,84 +60,73 @@ require('./routes.js')(app, passport); // load our routes and pass in our app an
 
 var handleClient = function(socket){
 
-    var _defaultdir = "./app/images/fashion";
+    var _defaultdir = "./app/images/";
     var uploader = new siofu();
     uploader.listen(socket);
     uploader.on("start",function(event){
-    var dir = _defaultdir;
+    var dir = _defaultdir + event.file.meta.product.product.type;
     if (!fs.existsSync(dir)){
         fs.mkdirSync(dir);
     }
-      uploader.dir = _defaultdir;
+      uploader.dir = dir;
     });
     
     uploader.on("saved",function(event){
-      console.log(event.file.meta.product.shoes._id);
-      if (event.file.meta.product.shoes._id !== ""){
-        controller.editshoe(event.file.meta.product.shoes,event.file.meta.product.token,send("addshoeR"));
+      console.log(event.file.meta.product.product._id);
+      if (event.file.meta.product.product._id !== ""){
+        controller.editProduct(event.file.meta.product.product,event.file.meta.product.token, send("editProductR"));
       }
       else{
-        controller.addshoe(event.file.meta.product.shoes,event.file.meta.product.token, send("addshoeR"));
+        controller.addProduct(event.file.meta.product.product,event.file.meta.product.token, send("addProductR"));
       }
     });
-
-
-
-
-
-
 
 
   var send = function(socketName){return function(data){socket.emit(socketName, data);};}
 
-  var A = function(data){
-    controller.getA(data, send);
-  }
-
   var login = function(data){
     controller.login(data.username, data.password, send("loginR"));
-  }
+  };
 
-  var addshoe = function(data){
-    controller.addshoe(data.shoes,data.token, send("addshoeR"));
-  }
+  var addProduct = function(data){
+    controller.addProduct(data.product,data.token, send("addProductR"));
+  };
 
-  var getshoes = function(){
-    controller.getshoes(send("getshoesR"));
-  }
+  var getBulkProductsTyped = function(type){
+    controller.getBulkProductsTyped(type,send("getBulkProductsR"));
+  };
 
-  var checkout = function(data){
-    controller.checkout(data,send("checkoutR"));
-  }
+  var getBulkProducts = function(){
+    controller.getBulkProducts(send("getBulkProductsR"));
+  };
 
-  var sociallogin = function(data){
-    controller.checkout(data,send("sociallogin"));
-  }
+  var getAllProductsTyped = function(type){
+    controller.getAllProductsTyped(type,send("getAllProductsR"));
+  };
 
-  var editshoe = function(data){
-    controller.editshoe(data.shoes,data.token,function(){getshoes()});
-  }
+  var getAllProducts = function(){
+    controller.getAllProducts(send("getAllProductsR"));
+  };
+
+
+  var editProduct = function(data){
+    controller.editProduct(data.product,data.token,send("editProductR"));
+  };
 
   var deleter = function(data){
-    console.log(data);
-    controller.deleter(data._id, data.token,function(){getshoes()});
-  }
+    controller.deleter(data._id, data.token,send("deleterR"));
+  };
 
-  socket.on('editshoe', editshoe)
-  socket.on('sociallogin', sociallogin)
-  socket.on('checkout', checkout);
+  socket.on('editProduct', editProduct)
   socket.on('login', login);
-  socket.on('addshoe', addshoe);
-  socket.on('getshoes', getshoes);
+  socket.on('addProduct', addProduct);
+  socket.on('getBulkProductsTyped', getBulkProductsTyped);
+  socket.on('getBulkProducts', getBulkProducts);
+  socket.on('getAllProductsTyped', getBulkProductsTyped);
+  socket.on('getAllProducts', getBulkProducts);
   socket.on('delete', deleter);
 }
 io.sockets.on('connection', handleClient);
-
-
-
-
-
-
 
 
 server.listen(80, function(){

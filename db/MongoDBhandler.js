@@ -5,31 +5,54 @@ var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 var url = 'mongodb://localhost:27017/test';
 
-	var getBulkShoesF = function(db, callback){
-		db.collection('shoe').find().toArray(callback);
-	};
-
-	var getBulkShoes = function(callback){
-		MongoClient.connect(url, function(err, db) {
-	  		assert.equal(null, err);
-	  		getBulkShoesF(db, function(err,items) {
-
-
-	      		callback([{'products':items}]);
-	      						db.close();
-	  		});
-		});
-	};
-
-
-	var getBulkFoodF = function(db, callback){
-		db.collection('food').find().toArray(callback);
+	var getBulkProductsF = function(db, callback){
+		db.collection('products').find().toArray(callback);
 	};
 	
-	var getBulkFood = function(callback){
+	var getBulkProducts = function(callback){
 		MongoClient.connect(url, function(err, db) {
 	  		assert.equal(null, err);
-	  		getBulkFoodF(db, function(err,items) {
+	  		getBulkProductsF(db, function(err,items) {
+
+	      		callback([{'products':items}]);
+	      						db.close();
+	  		});
+		});
+	};
+
+	var getAllProductsF = function(db, callback){
+		var cursor =db.collection('products').find();
+
+   		cursor.each(function(err, doc) {
+	      	assert.equal(err, null);
+	      	if (doc !== null) {
+	        	callback(doc);
+	      	} else {
+	        	db.close();
+	      	}
+   		});
+	};
+
+	var getAllProducts = function(callback){
+		MongoClient.connect(url, function(err, db) {
+	  		assert.equal(null, err);
+	  		getAllProductsF(db, function(doc) {
+				db.close();
+	      		callback(doc);
+	  		});
+		});
+	};
+
+
+
+	var getBulkProductsTypedF = function(type,db, callback){
+		db.collection('products').find({type :type}).toArray(callback);
+	};
+	
+	var getBulkProductsTyped = function(type,callback){
+		MongoClient.connect(url, function(err, db) {
+	  		assert.equal(null, err);
+	  		getBulkProductsTypedF(type,db, function(err,items) {
 
 
 	      		callback([{'products':items}]);
@@ -38,8 +61,8 @@ var url = 'mongodb://localhost:27017/test';
 		});
 	};
 
-	var getAllShoesF = function(db, callback){
-		var cursor =db.collection('shoe').find();
+	var getAllProductsTypedF = function(type,db, callback){
+		var cursor =db.collection('products').find({'type': type});
 
    		cursor.each(function(err, doc) {
 	      	assert.equal(err, null);
@@ -49,114 +72,66 @@ var url = 'mongodb://localhost:27017/test';
 	        	db.close();
 	      	}
    		});
-
 	};
-	var getAllShoes = function(callback){
+
+	var getAllProductsTyped = function(type,callback){
 		MongoClient.connect(url, function(err, db) {
 	  		assert.equal(null, err);
-	  		getAllShoesF(db, function(doc) {
+	  		getAllProductsTypedF(type,db, function(doc) {
 				db.close();
 	      		callback(doc);
 	  		});
 		});
 	};
 
-	var getAllFoodF = function(db, callback){
-		var cursor =db.collection('food').find();
-
-   		cursor.each(function(err, doc) {
-	      	assert.equal(err, null);
-	      	if (doc !== null) {
-	        	callback(doc);
-	      	} else {
-	        	db.close();
-	      	}
-   		});
-
-	};
-	var getAllFood = function(callback){
-		MongoClient.connect(url, function(err, db) {
-	  		assert.equal(null, err);
-	  		getAllShoesF(db, function(doc) {
-				db.close();
-	      		callback(doc);
-	  		});
-		});
-	};
-
-
-
-	var insertShoeF = function(shoe, db, callback) {
-   		db.collection('shoe').insertOne( shoe, function(err, result) {
+	var insertProductF = function(product, db, callback) {
+   		db.collection("products").insertOne( product, function(err, result) {
 		    assert.equal(err, null);
 		    //console.log("Inserted a document into the restaurants collection.");
 		    callback(true);
   		});
 	};
 
-	var insertShoe = function(shoe,callback){
+	var insertProduct = function(product,callback){
 		MongoClient.connect(url, function(err, db) {
 	  		assert.equal(null, err);
-	  		insertShoeF(shoe,db, function(result) {
+	  		insertProductF(product,db, function(result) {
 	      		db.close();
 	      		callback(result);
 	  		});
 		});
 	};
 
-	var login = function(username,password){
-		if (username === "adminshoes" && password === "555556") {
-			return "lsig895389U#)43OIodnfosaI2430#$%#6";
-		}
-		else{
-			return false;
-		}
-	};
-
-
-	var editShoeF = function(shoe,db,callback){
+	var editProductF = function(product,db,callback){
 		var criteria = {};
-		console.log("asdasd" + JSON.stringify(shoe));
-		if (shoe.name !== null && shoe.name !== undefined && shoe.name !== "") { criteria["name"] = shoe.name;  };
-		if (shoe.description !== null && shoe.description !== undefined && shoe.description !== "") { criteria["description"] = shoe.description;  };
-		if (shoe.colorId !== null && shoe.colorId !== undefined && shoe.colorId !== "") { criteria["colorId"] = shoe.colorId;  };
-		if (shoe.price !== null && shoe.price !== undefined && shoe.price !== "") { criteria["price"] = shoe.price;  };
-		if (shoe.image !== null && shoe.image !== undefined && shoe.image !== "") { criteria["image"] = shoe.image;  };
-
+		//console.log("asdasd" + JSON.stringify(product));
+		if (product.type !== null && product.type !== undefined && product.type !== "") { criteria["type"] = product.type;  };
+		if (product.name !== null && product.name !== undefined && product.name !== "") { criteria["name"] = product.name;  };
+		if (product.description !== null && product.description !== undefined && product.description !== "") { criteria["description"] = product.description;  };
+		if (product.colorId !== null && product.colorId !== undefined && product.colorId !== "") { criteria["colorId"] = product.colorId;  };
+		if (product.price !== null && product.price !== undefined && product.price !== "") { criteria["price"] = product.price;  };
+		if (product.image !== null && product.image !== undefined && product.image !== "") { criteria["image"] = product.image;  };
 		console.log(criteria);
-		db.collection('shoe').update( { '_id': ObjectId(shoe._id) }, { '$set': criteria}).then(console.log,callback("true;"));
-
+		db.collection('products').update( { '_id': ObjectId(product._id) }, { '$set': criteria}).then(console.log,callback("true;"));
 	};
-
-	var editShoe = function(shoe,callback){
+	var editProduct = function(product,callback){
 		MongoClient.connect(url, function(err, db) {
 	  		assert.equal(null, err);
-	  		editShoeF(shoe,db, function(result) {
+	  		editProductF(product,db, function(result) {
 	      		db.close();
 	      		callback(result);
 	  		});
 		});
 	};
-
-
-
-	var findShoe = function(criteria,callback){
-		MongoClient.connect(url, function(err, db) {
-	  		assert.equal(null, err);
-	  		console.log(criteria);
-			db.collection('shoe').find( criteria).toArray( function(err,result) {console.log("resultado" + result);db.close();callback(result);});
-		});
-	}
 
 
 	var deleterF = function(id,db,callback){
-			db.collection('shoe').remove( { _id : ObjectId(id) } ).then(function(){
+			db.collection('products').remove( { _id : ObjectId(id) } ).then(function(){
 				console.log(this);
 	      		db.close();
 	      		callback(true);
 			});
 		}
-
 	var deleter = function(id,callback){
 		MongoClient.connect(url, function(err, db) {
 	  		assert.equal(null, err);
@@ -167,17 +142,30 @@ var url = 'mongodb://localhost:27017/test';
 		});
 	};
 
+	var login = function(username,password){
+		if (username === "admin" && password === "22dos") {
+			return "lsig895389U#)43OIodnfosaI2430#$%#6";
+		}
+		else{
+			return false;
+		}
+	};
+
+
 
 
 	var mongodbhandler = {
-      "getAllShoes" : function(callback){getAllShoes(callback)},
-      "getAllFood" : function(callback){getAllFood(callback)},
-      "insertShoe" : function(data, callback){insertShoe(data, callback)},
-      "login" : function(username,password){return login(username,password);},
-      "getBulkFood"	: function(callback){getBulkFood(callback)},
-      "getBulkShoes" : function(callback){getBulkShoes(callback)},
-      "edit" : function(shoe,callback){editShoe(shoe,callback);},
-      "deleter" : function(id,callback){deleter(id,callback);}
+      "getProducts" : function(callback){getProducts(callback)},
+      "getBulkProducts"	: function(callback){getBulkProducts(callback)},
+
+      'getAllProductsTyped' : function(type,callback){getAllProductsTyped(data, callback)},
+      "getBulkProductsTyped"	: function(type,callback){getBulkProductsTyped(type,callback)},
+
+      "insertProduct" : function(data, callback){insertProduct(data, callback)},
+      "edit" : function(product,callback){editProduct(product,callback);},
+      "deleter" : function(id,callback){deleter(id,callback);},
+
+      "login" : function(username,password){login(username,password);}
   	}
 
 

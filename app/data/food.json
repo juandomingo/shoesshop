@@ -1,7 +1,7 @@
 [{
   "products": [
     {
-      "id": 1,
+      "_id": 1,
       "colorId": 2,
       "name": "Food item #1",
       "image": "images/food/item7.jpeg",
@@ -9,7 +9,7 @@
       "price": 21
     },
     {
-      "id": 2,
+      "_id": 2,
       "colorId": 9,
       "name": "Food item #2",
       "image": "images/food/item4.jpeg",
@@ -17,23 +17,23 @@
       "price": 25
     },
     {
-      "id": 3,
+      "_id": 3,
       "colorId": 3,
       "name": "Food item #3",
       "image": "images/food/item2.jpeg",
-      "description": "deserunt esse sunt quia accusantium rerum officia fugit tempora\nvel consequatur labore corrupti omnis dolores sit\ncupiditate ut id velit consequatur quia recusandae sunt perferendis voluptas",
+      "description": "deserunt esse sunt quia accusantium rerum officia fugit tempora\nvel consequatur labore corrupti omnis dolores sit\ncupiditate ut _id velit consequatur quia recusandae sunt perferendis voluptas",
       "price": 17
     },
     {
-      "id": 4,
+      "_id": 4,
       "colorId": 5,
       "name": "Food item #4",
       "image": "images/food/item8.jpeg",
-      "description": "aut magni provident corporis accusamus nisi corrupti\ndolore facere voluptates saepe\nunde quos id tempore veritatis praesentium\nporro eius in dolores maxime\nex veritatis quibusdam nam ipsum",
+      "description": "aut magni provident corporis accusamus nisi corrupti\ndolore facere voluptates saepe\nunde quos _id tempore veritatis praesentium\nporro eius in dolores maxime\nex veritatis quibusdam nam ipsum",
       "price": 20
     },
     {
-      "id": 5,
+      "_id": 5,
       "colorId": 5,
       "name": "Food item #5",
       "image": "images/food/item1.jpeg",
@@ -41,7 +41,7 @@
       "price": 5
     },
     {
-      "id": 6,
+      "_id": 6,
       "colorId": 2,
       "name": "Food item #6",
       "image": "images/food/item2.jpeg",
@@ -49,7 +49,7 @@
       "price": 22
     },
     {
-      "id": 7,
+      "_id": 7,
       "colorId": 6,
       "name": "Food item #7",
       "image": "images/food/item7.jpeg",
@@ -57,7 +57,7 @@
       "price": 11
     },
     {
-      "id": 8,
+      "_id": 8,
       "colorId": 2,
       "name": "Food item #8",
       "image": "images/food/item1.jpeg",
@@ -65,7 +65,7 @@
       "price": 16
     },
     {
-      "id": 9,
+      "_id": 9,
       "colorId": 1,
       "name": "Food item #9",
       "image": "images/food/item4.jpeg",
@@ -73,7 +73,7 @@
       "price": 11
     },
     {
-      "id": 10,
+      "_id": 10,
       "colorId": 5,
       "name": "Food item #10",
       "image": "images/food/item5.jpeg",
@@ -81,7 +81,7 @@
       "price": 17
     },
     {
-      "id": 11,
+      "_id": 11,
       "colorId": 8,
       "name": "Food item #11",
       "image": "images/food/item3.jpeg",
@@ -89,7 +89,7 @@
       "price": 13
     },
     {
-      "id": 12,
+      "_id": 12,
       "colorId": 4,
       "name": "Food item #12",
       "image": "images/food/item9.jpeg",
@@ -97,7 +97,7 @@
       "price": 21
     },
     {
-      "id": 13,
+      "_id": 13,
       "colorId": 1,
       "name": "Food item #13",
       "image": "images/food/item2.jpeg",
@@ -105,11 +105,11 @@
       "price": 6
     },
     {
-      "id": 14,
+      "_id": 14,
       "colorId": 9,
       "name": "Food item #14",
       "image": "images/food/item7.jpeg",
-      "description": "et voluptatem optio omnis quia et quam\nplaceat eum aut dolorum eius deserunt ullam facere\naspernatur similique voluptatem quia ut ea molestiae architecto expedita\ndolor vero vel\nnon beatae qui id\net corrupti ex recusandae accusamus reprehenderit",
+      "description": "et voluptatem optio omnis quia et quam\nplaceat eum aut dolorum eius deserunt ullam facere\naspernatur similique voluptatem quia ut ea molestiae architecto expedita\ndolor vero vel\nnon beatae qui _id\net corrupti ex recusandae accusamus reprehenderit",
       "price": 23
     }
   ]
